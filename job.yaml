@@ -8,7 +8,7 @@ name: prasad-image-classification-m5n-g6.4xlarge-20260225-3
 # image_uri:  # anyscale/ray:2.43.0-slim-py312-cu125
 #image_uri: anyscale/ray:2.53.0-slim-py312-cu129
 #image_uri: 830883877497.dkr.ecr.us-west-2.amazonaws.com/anyscale/ray:prasad_rt
-image_uri: 830883877497.dkr.ecr.us-west-2.amazonaws.com/anyscale/ray:sca-rt-1
+image_uri: 830883877497.dkr.ecr.us-west-2.amazonaws.com/anyscale/ray:sca-perf-1
 #containerfile: ./Dockerfile
 
 compute_config:
@@ -19,8 +19,8 @@ compute_config:
     # This example uses A10G GPUs for the VLM model inference, if you need to
     # change the instance type, make sure the vllm config is updated accordingly.
     - instance_type: m5.xlarge
-      min_nodes: 250
-      max_nodes: 350
+      min_nodes: 400
+      max_nodes: 400
       # market_type: SPOT
     # - instance_type: m5n.4xlarge
     # min_nodes: 0
