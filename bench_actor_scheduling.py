@@ -36,6 +36,7 @@ def main():
         help="Custom resource requirement, e.g. fake_GPU=1",
     )
     parser.add_argument("--use-pg", action="store_true", help="Schedule actors inside placement groups")
+    parser.add_argument("--profile", type=int, default=20)
     args = parser.parse_args()
 
     ray.init()
