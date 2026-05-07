@@ -36,20 +36,22 @@ def main():
         help="Custom resource requirement, e.g. fake_GPU=1",
     )
     parser.add_argument("--use-pg", action="store_true", help="Schedule actors inside placement groups")
-    parser.add_argument("--profile", type=int, default=20)
+    parser.add_argument("--profile", action='store_true')
     args = parser.parse_args()
 
     ray.init()
-    job_id = os.environ.get("ANYSCALE_JOB_ID", "unknown")
-    if job_id == 'unknown':
-        job_id = os.environ.get("ANYSCALE_WORKSPACE_ID", "unknown")
+    if args.profile:
+        job_id = os.environ.get("ANYSCALE_JOB_ID", "unknown")
+        if job_id == 'unknown':
+            job_id = os.environ.get("ANYSCALE_WORKSPACE_ID", "unknown")
 
-    profiling = Profiling(
-        outdir=f"/mnt/shared_storage/{BENCHMARK}/{job_id}",
-        num_gpu_nodes=0,
-    )
+        profiling = Profiling(
+            outdir=f"/mnt/shared_storage/{BENCHMARK}/{job_id}",
+            num_gpu_nodes=0,
+        )
 
-    profiling.start()
+        profiling.start()
+
     nodes = ray.nodes()
     alive_nodes = [n for n in nodes if n["Alive"]]
     print(f"Cluster: {len(alive_nodes)} alive nodes")
@@ -82,7 +84,8 @@ def main():
     print(f"  Scheduling + startup:    {t_ready - t_create:.2f}s")
     print(f"  Total:                   {t_ready - t0:.2f}s")
 
-    profiling.stop(s3_prefix=f"{BENCHMARK}/{job_id}")
+    if args.profile:
+        profiling.stop(s3_prefix=f"{BENCHMARK}/{job_id}")
     ray.shutdown()
 
 
