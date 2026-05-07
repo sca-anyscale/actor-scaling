@@ -46,7 +46,7 @@ cloud: anyscale_v2_default_cloud
 env_vars:
   ANYSCALE_DISABLE_OPTIMIZED_RAY: "true"
   PROFILER_MODE: "none"          # "nsys", "torch", or "none"
-  PYSPY_ENABLED: "1"             # Enable py-spy CPU profiling
+  PYSPY_ENABLED: "0"             # Enable py-spy CPU profiling
   PERF_PROFILING_ENABLED: "1"    # Enable perf record on raylet/gcs
 
 # The script to run in your job. You can also do "uv run main.py" if you have a
