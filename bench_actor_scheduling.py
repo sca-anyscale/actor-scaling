@@ -52,6 +52,7 @@ def main():
 
         profiling.start()
 
+    time.sleep(30)
     nodes = ray.nodes()
     alive_nodes = [n for n in nodes if n["Alive"]]
     print(f"Cluster: {len(alive_nodes)} alive nodes")
