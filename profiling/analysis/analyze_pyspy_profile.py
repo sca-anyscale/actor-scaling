@@ -34,10 +34,43 @@ Examples:
 
 import argparse
 import json
+import re
 import sys
 from collections import defaultdict
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
+
+
+# "unk_<dso>@0x<addr>" is emitted by the perf collapser for unresolved frames
+# in stripped DSOs (CUDA libs, torch extensions, etc.). By default we group
+# per-DSO; --detail-unknowns keeps the address.
+_UNK_ADDR_RE = re.compile(r"@0x[0-9a-f]+$")
+
+
+def collapse_unknown_addresses(
+    frames: List[dict], samples: List[List[int]]
+) -> Tuple[List[dict], List[List[int]]]:
+    """Merge frames whose canonical name matches (stripping "@0x<addr>").
+
+    Returns (new_frames, new_samples) with every stack's indices remapped so
+    that all unk_<dso>@0x... frames with the same <dso> point to one entry.
+    Non-matching frames are unchanged.
+    """
+    canon_to_rep: Dict[str, int] = {}
+    idx_remap: List[int] = [0] * len(frames)
+    new_frames: List[dict] = []
+    for i, f in enumerate(frames):
+        canon = _UNK_ADDR_RE.sub("", f["name"])
+        rep = canon_to_rep.get(canon)
+        if rep is None:
+            rep = len(new_frames)
+            canon_to_rep[canon] = rep
+            nf = dict(f)
+            nf["name"] = canon
+            new_frames.append(nf)
+        idx_remap[i] = rep
+    new_samples = [[idx_remap[idx] for idx in s] for s in samples]
+    return new_frames, new_samples
 
 
 def load_profile(path: str) -> dict:
@@ -374,6 +407,15 @@ def main():
         action="store_true",
         help="List all threads/profiles and exit",
     )
+    parser.add_argument(
+        "--detail-unknowns",
+        action="store_true",
+        help=(
+            "Show per-address detail for unresolved frames "
+            "(unk_<dso>@0x<addr>). Default groups by DSO: all addresses "
+            "within the same stripped library merge into one unk_<dso> bucket."
+        ),
+    )
 
     args = parser.parse_args()
 
@@ -421,6 +463,9 @@ def main():
         all_samples.extend(profile["samples"])
         all_weights.extend(profile["weights"])
         all_thread_names.extend([name] * n_samples)
+
+    if not args.detail_unknowns:
+        frames, all_samples = collapse_unknown_addresses(frames, all_samples)
 
     total_weight = sum(all_weights)
     total_samples = len(all_samples)
