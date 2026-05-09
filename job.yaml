@@ -29,10 +29,10 @@ compute_config:
   enable_cross_zone_scaling: false
 
 requirements:
-    - daft==0.6.2
-    - torch==2.7.0
-    - torchvision==0.22.0
-    - numpy==1.26.4
+  # - daft==0.6.2
+  # - torch==2.7.0
+  # - torchvision==0.22.0
+  # - numpy==1.26.4
 
  
 # Path to a local directory or a remote URI to a .zip file (S3, GS, HTTP) that
