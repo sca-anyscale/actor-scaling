@@ -15,6 +15,9 @@ compute_config:
   #auto_select_worker_config: True
   head_node:
     instance_type: m5.8xlarge
+    resources:
+      CPU: 0
+      GPU: 0
   worker_nodes:
     # This example uses A10G GPUs for the VLM model inference, if you need to
     # change the instance type, make sure the vllm config is updated accordingly.
