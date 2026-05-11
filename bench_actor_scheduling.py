@@ -18,8 +18,11 @@ import ray
 from profiling.coordinator import Profiling
 
 BENCHMARK = 'sca-actor-scaling'
+LABEL_SEL = {
+    "anyscale/node-group": "!in(head)",
+}
 
-@ray.remote
+@ray.remote(label_selector=LABEL_SEL)
 class DummyActor:
     def ready(self):
         return True
