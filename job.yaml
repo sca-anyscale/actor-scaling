@@ -51,7 +51,7 @@ env_vars:
   PROFILER_MODE: "none"          # "nsys", "torch", or "none"
   PYSPY_ENABLED: "0"             # Enable py-spy CPU profiling
   PERF_PROFILING_ENABLED: "1"    # Enable perf record on raylet/gcs
-  PERF_NUM_CPU_WORKERS: "0"
+  PERF_NUM_CPU_WORKERS: "5"
   PERF_NUM_GPU_WORKERS: "0"
 
 # The script to run in your job. You can also do "uv run main.py" if you have a
