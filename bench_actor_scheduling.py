@@ -19,7 +19,7 @@ from profiling.coordinator import Profiling
 
 BENCHMARK = 'sca-actor-scaling'
 LABEL_SEL = {
-    "anyscale/node-group": "!in(head-node)",
+    "ray.io/node-group": "!in(head)",
 }
 
 @ray.remote(label_selector=LABEL_SEL)
