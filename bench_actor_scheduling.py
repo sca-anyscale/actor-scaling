@@ -12,6 +12,7 @@ Usage:
 """
 import argparse
 import os
+from pprint import pprint
 import time
 
 import ray
@@ -57,6 +58,7 @@ def main():
 
     # time.sleep(30)
     nodes = ray.nodes()
+    pprint(ray.get_runtime_context().get_node_labels())
     alive_nodes = [n for n in nodes if n["Alive"]]
     print(f"Cluster: {len(alive_nodes)} alive nodes")
     for n in alive_nodes[:3]:
