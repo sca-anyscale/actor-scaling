@@ -23,7 +23,8 @@ def profiling_range(name):
         nvtx.range_pop()
 
 
-def cuda_profiler_fence(call_count, skip_batches, active_batches, node_ip=""):
+def cuda_profiler_fence(call_count, skip_batches, active_batches, node_ip="",
+                        outdir="/mnt/shared_storage/image_embedding_jsonl"):
     """Start/stop the CUDA profiler based on batch call count.
 
     Used with nsys cudaProfilerApi capture range mode. Starts profiling
@@ -63,7 +64,7 @@ def cuda_profiler_fence(call_count, skip_batches, active_batches, node_ip=""):
         try:
             pid = _os.getpid()
             matches = glob.glob(
-                f"/mnt/shared_storage/image_embedding_jsonl/*/nsys_*_{pid}.nsys-rep"
+                f"{outdir}/*/nsys_*_{pid}.nsys-rep"
             )
             for f in matches:
                 print(

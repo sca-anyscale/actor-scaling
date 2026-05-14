@@ -46,13 +46,13 @@ local directory named after the job ID.
 # Creates prodjob_abc123/ with logs and telemetry files
 ```
 
-Respects `PROFILING_S3_BUCKET` env var (same default as `telemetry.py`).
+Respects `PROFILING_STORAGE_BUCKET` env var (same default as `telemetry.py`).
 
 ### `analyze_perf_profiles.sh`
 
 Batch-converts all `perf_*_collapsed.txt` files in the current directory to
 speedscope JSON and generates a thread summary. Run from a directory
-containing perf collapsed stack files (downloaded from S3 telemetry).
+containing perf collapsed stack files (downloaded from cloud storage telemetry).
 
 ```bash
 cd /path/to/downloaded/telemetry

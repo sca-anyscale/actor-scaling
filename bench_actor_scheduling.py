@@ -43,6 +43,7 @@ def main():
     parser.add_argument("--profile", action='store_true')
     args = parser.parse_args()
 
+    outdir = os.environ.get("PROFILING_STORAGE_DIR", "/mnt/shared_storage")
     ray.init()
     if args.profile:
         job_id = os.environ.get("ANYSCALE_JOB_ID", "unknown")
@@ -50,7 +51,7 @@ def main():
             job_id = os.environ.get("ANYSCALE_WORKSPACE_ID", "unknown")
 
         profiling = Profiling(
-            outdir=f"/mnt/shared_storage/{BENCHMARK}/{job_id}",
+            outdir=f"{outdir}/{BENCHMARK}/{job_id}",
             num_gpu_nodes=0,
         )
 
@@ -91,7 +92,7 @@ def main():
     print(f"  Total:                   {t_ready - t0:.2f}s")
 
     if args.profile:
-        profiling.stop(s3_prefix=f"{BENCHMARK}/{job_id}")
+        profiling.stop(storage_prefix=f"{BENCHMARK}/{job_id}")
     ray.shutdown()
 
 

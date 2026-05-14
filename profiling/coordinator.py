@@ -38,7 +38,7 @@ class Profiling:
         RAY_MAX_LIMIT_FROM_API_SERVER: object-store sampling defaults to a 10k
             object cap per call. Set this env var to e.g. "200000" on the head
             node to fully sample large runs (otherwise samples are truncated).
-        PROFILING_S3_BUCKET:    S3 bucket for telemetry upload
+        PROFILING_STORAGE_BUCKET:    storage bucket for telemetry upload
 
     Usage:
         profiling = Profiling(outdir="/mnt/shared_storage/my_benchmark/job123",
@@ -48,7 +48,7 @@ class Profiling:
         infer_kwargs["runtime_env"] = profiling.nsys_runtime_env()
         # ... run benchmark ...
 
-        profiling.stop(s3_prefix="my-benchmark/job123")
+        profiling.stop(storage_prefix="my-benchmark/job123")
     """
 
     def __init__(self, outdir, num_gpu_nodes=0):
@@ -162,12 +162,12 @@ class Profiling:
             return nsys.runtime_env(self.outdir)
         return {}
 
-    def stop(self, s3_prefix=None, s3_bucket=None):
-        """Stop all profilers and upload telemetry to S3.
+    def stop(self, storage_prefix=None, storage_bucket=None):
+        """Stop all profilers and upload telemetry to cloud storage.
 
         Args:
-            s3_prefix: S3 key prefix for telemetry upload. If None, skips upload.
-            s3_bucket: S3 bucket name. Defaults to PROFILING_S3_BUCKET env var.
+            storage_prefix: storage key prefix for telemetry upload. If None, skips upload.
+            storage_bucket: storage bucket name. Defaults to PROFILING_STORAGE_BUCKET env var.
         """
         if self.profiler_mode == "nsys":
             print("Waiting 10s for nsys to flush profiling data...")
@@ -191,5 +191,5 @@ class Profiling:
             perf.stop_workers(self._worker_perf_actors)
             perf.stop_head(self._head_perf_handles)
 
-        if s3_prefix is not None:
-            telemetry.upload(self.outdir, s3_prefix, s3_bucket=s3_bucket)
+        if storage_prefix is not None:
+            telemetry.upload(self.outdir, storage_prefix, storage_bucket=storage_bucket)

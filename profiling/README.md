@@ -41,7 +41,7 @@ class MyActor:
             ...
 
 # After the benchmark completes, stop profilers and upload telemetry.
-profiling.stop(s3_prefix="my-benchmark/<job_id>")
+profiling.stop(storage_prefix="my-benchmark/<job_id>")
 ```
 
 That's it. The `Profiling` class handles starting/stopping py-spy, perf,
@@ -98,7 +98,7 @@ See [`analysis/README.md`](analysis/README.md) for more analysis examples.
 | `PERF_NUM_GPU_WORKERS`   | `5`   | Number of GPU worker nodes to perf profile |
 | `GPU_MONITOR_ENABLED` | `"0"` | Set to `"1"` to enable nvidia-smi monitoring |
 | `NET_MONITOR_ENABLED` | `"0"` | Set to `"1"` to enable network I/O monitoring |
-| `PROFILING_S3_BUCKET` | `anyscale-staging-data-cld-kvedzwag2qa8i5bjxuevf5i7` | S3 bucket for telemetry upload |
+| `PROFILING_STORAGE_BUCKET` | `anyscale-staging-data-cld-kvedzwag2qa8i5bjxuevf5i7` | storage bucket for telemetry upload |
 
 ## Modules
 
@@ -111,7 +111,7 @@ See [`analysis/README.md`](analysis/README.md) for more analysis examples.
 | `net_monitor.py` | Samples `psutil.net_io_counters` on every node, writes CSV |
 | `nsys.py` | Builds `runtime_env` config to wrap Ray workers with `nsys profile` |
 | `nvtx.py` | NVTX range annotations and CUDA profiler start/stop for nsys capture control |
-| `telemetry.py` | Uploads profiling artifacts from shared storage to S3 |
+| `telemetry.py` | Uploads profiling artifacts from shared storage to cloud storage |
 
 ## Subdirectories
 
