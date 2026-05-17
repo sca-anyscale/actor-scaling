@@ -1,5 +1,7 @@
 #!/bin/bash
 set -x
-#python3 bench_actor_scheduling.py --num-actors 8000 --profile
-#python3 bench_actor_scheduling.py --num-actors 16000
-python3 bench_actor_scheduling.py --num-actors 64000 --profile
+
+PROFILE=--profile
+CPU=0.5
+ACTORS=64000
+python3 bench_actor_scheduling.py --num-cpus-per-actor ${CPU} --num-actors ${ACTORS} ${PROFILE}
