@@ -8,7 +8,7 @@ name: prasad-image-classification-m5n-g6.4xlarge-20260225-3
 # image_uri:  # anyscale/ray:2.43.0-slim-py312-cu125
 #image_uri: anyscale/ray:2.53.0-slim-py312-cu129
 #image_uri: 830883877497.dkr.ecr.us-west-2.amazonaws.com/anyscale/ray:prasad_rt
-image_uri: 830883877497.dkr.ecr.us-west-2.amazonaws.com/anyscale/ray:sca-oss-perf-7
+image_uri: 830883877497.dkr.ecr.us-west-2.amazonaws.com/anyscale/ray:sca-oss-perf-3
 #containerfile: ./Dockerfile
 
 compute_config:
@@ -55,8 +55,10 @@ env_vars:
   PERF_NUM_GPU_WORKERS: "0"
   PROFILING_STORAGE_DIR: "/mnt/shared_storage"
   PROFILING_STORAGE_TYPE: "s3"   # S3 or GCs at present
-  # RAY_pull_from_reporter_interval_ms: "50"
-  # RAY_raylet_report_resources_period_milliseconds: "50"
+  RAY_pull_from_reporter_interval_ms: "20"
+  RAY_raylet_report_resources_period_milliseconds: "20"
+  RAY_gcs_resource_broadcast_max_batch_delay_ms: "5"
+  RAY_.gcs_resource_broadcast_max_batch_size: "5"
 
 # The script to run in your job. You can also do "uv run main.py" if you have a
 # pyproject.toml file in your working_dir.
