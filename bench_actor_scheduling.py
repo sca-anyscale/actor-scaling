@@ -16,7 +16,6 @@ from pprint import pprint
 import time
 
 import ray
-from profiling.coordinator import Profiling
 
 BENCHMARK = 'sca-actor-scaling'
 LABEL_SEL = {
@@ -47,6 +46,7 @@ def main():
     outdir = os.environ.get("PROFILING_STORAGE_DIR", "/mnt/shared_storage")
     ray.init()
     if args.profile:
+        from profiling.coordinator import Profiling
         job_id = os.environ.get("ANYSCALE_JOB_ID", "unknown")
         if job_id == 'unknown':
             job_id = os.environ.get("ANYSCALE_WORKSPACE_ID", "unknown")
