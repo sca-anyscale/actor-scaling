@@ -22,8 +22,8 @@ LABEL_SEL = {
     "ray.io/node-group": "!in(head-node,head)",
 }
 
-#@ray.remote(label_selector=LABEL_SEL, scheduling_strategy="SPREAD")
-@ray.remote(label_selector=LABEL_SEL)
+@ray.remote(label_selector=LABEL_SEL, scheduling_strategy="SPREAD")
+#@ray.remote(label_selector=LABEL_SEL)
 class DummyActor:
     def ready(self):
         return True
