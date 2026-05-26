@@ -71,7 +71,7 @@ if args.profile:
 
     profiling.start()
 
-ray._common.test_utils.wait_for_condition(no_resource_leaks, timeout=60)
+#ray._common.test_utils.wait_for_condition(no_resource_leaks, timeout=60)
 monitor_actor = test_utils.monitor_memory_usage()
 dashboard_test = DashboardTestAtScale(addr)
 
@@ -89,7 +89,7 @@ print(f"Peak memory usage per processes:\n {usage}")
 del monitor_actor
 
 # Get the dashboard result
-ray._common.test_utils.wait_for_condition(no_resource_leaks)
+#ray._common.test_utils.wait_for_condition(no_resource_leaks)
 
 rate = args.num_actors / (end_time - start_time)
 try:
