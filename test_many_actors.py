@@ -76,7 +76,7 @@ monitor_actor = test_utils.monitor_memory_usage()
 dashboard_test = DashboardTestAtScale(addr)
 
 start_time = time.time()
-test_max_actors()
+test_max_actors(args)
 end_time = time.time()
 
 if args.profile:
