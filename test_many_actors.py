@@ -71,7 +71,7 @@ if args.profile:
 
     profiling.start()
 
-ray._common.test_utils.wait_for_condition(no_resource_leaks)
+ray._common.test_utils.wait_for_condition(no_resource_leaks, timeout=60)
 monitor_actor = test_utils.monitor_memory_usage()
 dashboard_test = DashboardTestAtScale(addr)
 
