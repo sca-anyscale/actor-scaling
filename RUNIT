@@ -4,4 +4,5 @@ set -x
 #PROFILE=--profile
 CPU=0.25
 ACTORS=32000
-python3 bench_actor_scheduling.py --num-cpus-per-actor ${CPU} --num-actors ${ACTORS} ${PROFILE}
+export SMOKE_TEST=true
+python3 ./test_many_actors.py --num-cpus-per-actor ${CPU} --num-actors ${ACTORS} ${PROFILE}
