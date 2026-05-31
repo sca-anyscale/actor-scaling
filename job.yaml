@@ -55,6 +55,7 @@ env_vars:
   PERF_NUM_GPU_WORKERS: "0"
   PROFILING_STORAGE_DIR: "/mnt/shared_storage"
   PROFILING_STORAGE_TYPE: "s3"   # S3 or GCs at present
+  RAY_ray_event_recorder_max_queued_events: "40000"
   # RAY_pull_from_reporter_interval_ms: "20"
   # RAY_raylet_report_resources_period_milliseconds: "20"
   # RAY_gcs_resource_broadcast_max_batch_delay_ms: "5"
