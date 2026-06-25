@@ -36,7 +36,8 @@ def test_max_actors(args):
     # TODO (Alex): Dynamically set this based on number of cores
     cpus_per_actor = args.num_cpus_per_actor
 
-    @ray.remote(namespace="sca-test-1", num_cpus=cpus_per_actor, scheduling_strategy="SPREAD")
+    #@ray.remote(namespace="sca-test-1", num_cpus=cpus_per_actor, scheduling_strategy="SPREAD")
+    @ray.remote(namespace="sca-test-1", num_cpus=cpus_per_actor)
     class Actor:
         def foo(self):
             pass
