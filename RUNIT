@@ -3,6 +3,6 @@ set -x
 
 PROFILE=--profile
 CPU=0.25
-ACTORS=320
+ACTORS=32000
 export SMOKE_TEST=true
 python3 ./test_many_actors.py --num-cpus-per-actor ${CPU} --num-actors ${ACTORS} ${PROFILE}

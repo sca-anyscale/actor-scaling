@@ -24,8 +24,8 @@ compute_config:
     # This example uses A10G GPUs for the VLM model inference, if you need to
     # change the instance type, make sure the vllm config is updated accordingly.
     - instance_type: m5.xlarge
-      min_nodes: 20
-      max_nodes: 20
+      min_nodes: 2000
+      max_nodes: 2000
       # market_type: SPOT
     # - instance_type: m5n.4xlarge
     # min_nodes: 0
